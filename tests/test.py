@@ -10,5 +10,6 @@ class TestFileWriter(unittest.TestCase):
 
     def test_create_folder(self):
         self.fw.create_folder("test")
-        self.assertTrue(True)
+        self.assertTrue(os.path.exists(self.ROOT + "test"))
+    
 
