@@ -7,7 +7,7 @@ setup(
     author='Iván Casanova',
     author_email='icnovaro@gmail.com,
     # Needed to actually package something
-    packages=['FileWriter'],
+    packages=['filewriter'],
     # Needed for dependencies
     #install_requires=['numpy'],
     # *strongly* suggested for sharing

@@ -1,8 +1,14 @@
+import os
 import unittest
-from FileWriter import FileWriter
+from filewriter import FileWriter
 
 class TestFileWriter(unittest.TestCase):
 
-    def test_base(self):
-        fw = FileWriter()
+    def setUp(self):
+        self.ROOT = "files/"
+        self.fw = FileWriter(self.ROOT)
+
+    def test_create_folder(self):
+        self.fw.create_folder("test")
         self.assertTrue(True)
+
