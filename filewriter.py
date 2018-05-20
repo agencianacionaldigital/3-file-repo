@@ -1,4 +1,5 @@
 import os
+from shutil import copyfile
 
 class FileWriter:
 
@@ -6,7 +7,7 @@ class FileWriter:
         self.ROOT_FOLDER = root_folder
     
     def get_absolute_uri(self, uri):
-        return "{}{}".format(self.ROOT_FOLDER, uri)
+        return os.path.join(self.ROOT_FOLDER, uri)
 
     def create_folder(self, name):
         """
@@ -18,5 +19,8 @@ class FileWriter:
             raise ValueError(s)
 
         os.makedirs(uri)
+    
+    def copy_file(self, original):
+        copy_file(original, "hola.pdf")
 
         
