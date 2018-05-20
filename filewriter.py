@@ -1,5 +1,5 @@
 import os
-from shutil import copyfile
+from shutil import copyfile, copy2
 
 class FileWriter:
 
@@ -20,7 +20,20 @@ class FileWriter:
 
         os.makedirs(uri)
     
-    def copy_file(self, original):
-        copy_file(original, "hola.pdf")
+    def copy_file_to_repo(self,source_path):
+        """
+            Copy file from path given to an available repository tree folder
+        """
+        destiny_path = self.get_destiny_path()
+
+        if not os.path.exists(destiny_path):
+            os.makedirs(destiny_path)
+
+        copyfile(source_path, "files/hola.pdf")
+
+        return "files/hola.pdf" 
+
+    def get_destiny_path(self):
+        return "files"
 
         

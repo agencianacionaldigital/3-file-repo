@@ -14,7 +14,11 @@ class TestFileWriter(unittest.TestCase):
         self.fw.create_folder("test")
         self.assertTrue(os.path.exists(self.ROOT + "test"))
 
-
+    def test_copy_file_to_repo(self):
+        #dummy_file = os.path.dirname("/tests/dummy.pdf")
+        file_path = self.fw.copy_file_to_repo("tests/dummy.pdf")
+        self.assertTrue(os.path.isfile(file_path))
+    
 
     #Tear Down Code
 
