@@ -15,7 +15,6 @@ class TestFileWriter(unittest.TestCase):
         self.assertTrue(os.path.exists(self.ROOT + "test"))
 
     def test_copy_file_to_repo(self):
-        #dummy_file = os.path.dirname("/tests/dummy.pdf")
         file_path = self.fw.copy_file_to_repo("tests/dummy.pdf")
         self.assertTrue(os.path.isfile(file_path))
     
@@ -32,6 +31,13 @@ class TestFileWriter(unittest.TestCase):
 
         folders = self.fw.get_folders_count(self.ROOT)
         self.assertEquals(folders, 2)
+
+    def test_get_parent_folder(self):
+        self.fw.create_folder("parent")
+        self.fw.create_folder("parent/child")
+        parent_folder = self.fw.get_parent_folder("files/parent/child")
+        self.assertEquals(parent_folder, "files/parent" )
+
         
     #Tear Down Code
 

@@ -43,6 +43,9 @@ class FileWriter:
         return "files"
 
     def get_folders_count(self, path):
+        """
+            Gets the count children of one level depth only
+        """
         folders = 0
         for x in os.listdir(path):
             if os.path.isdir(os.path.join(self.ROOT_FOLDER, x)):
@@ -50,7 +53,6 @@ class FileWriter:
         return folders
 
     
-    def get_parent(self, path):
-        pass
-
+    def get_parent_folder(self, path):
+        return os.path.dirname(path)
         
