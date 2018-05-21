@@ -19,6 +19,9 @@ class TestFileWriter(unittest.TestCase):
         file_path = self.fw.copy_file_to_repo("tests/dummy.pdf")
         self.assertTrue(os.path.isfile(file_path))
     
+    def test_extract_filename(self):
+        file_path =  "tests/dummy.pdf"
+        self.fw.extract_filename(file_path)
 
     #Tear Down Code
 
