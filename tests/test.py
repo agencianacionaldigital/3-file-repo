@@ -23,6 +23,16 @@ class TestFileWriter(unittest.TestCase):
         file_path =  "tests/dummy.pdf"
         self.fw.extract_filename(file_path)
 
+    def test_get_folders_count(self):
+        self.fw.create_folder("folder1")
+        self.fw.create_folder("folder2")
+        
+        self.fw.create_folder("folder1/folder1.1")
+        self.fw.create_folder("folder2/folder2.1")        
+
+        folders = self.fw.get_folders_count(self.ROOT)
+        self.assertEquals(folders, 2)
+        
     #Tear Down Code
 
     def tearDown(self):

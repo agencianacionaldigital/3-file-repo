@@ -42,4 +42,15 @@ class FileWriter:
     def get_destiny_path(self):
         return "files"
 
+    def get_folders_count(self, path):
+        folders = 0
+        for x in os.listdir(path):
+            if os.path.isdir(os.path.join(self.ROOT_FOLDER, x)):
+                folders+=1
+        return folders
+
+    
+    def get_parent(self, path):
+        pass
+
         
