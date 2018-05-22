@@ -7,6 +7,8 @@ from shutil import copyfile, copy2
 class FileWriter:
     
     MAX_FOLDERS = 64
+    MAX_DEPTH = 3
+    MAX_FILES = 64
     
     def __init__(self, root_folder, current_folder):
         self.ROOT_FOLDER = root_folder
@@ -19,16 +21,15 @@ class FileWriter:
     def get_absolute_uri(self, uri):
         return os.path.join(self.ROOT_FOLDER, uri)
 
-    def create_folder(self, name):
+    def create_folder(self, path):
         """
             Creates folder if it does not exist
         """
-        uri = self.get_absolute_uri(name)
-        if os.path.exists(uri):
-            s = "The folder's name: {} already exists.".format(name)
+        if os.path.exists(path):
+            s = "The folder's name: {} already exists.".format(path)
             raise ValueError(s)
 
-        os.makedirs(uri)
+        os.makedirs(path)
   
     def copy_file_to_repo(self,source_path):
         """
@@ -37,8 +38,11 @@ class FileWriter:
         #the file name is the same source file name
         destiny_file_basename = self.extract_filename(source_path)
         destiny_path = self.get_destiny_path()
-        destiny_absolute_path = os.path.join(destiny_path, destiny_file_basename)
 
+        if destiny_path is None:
+            return None
+
+        destiny_absolute_path = os.path.join(destiny_path, destiny_file_basename)
         if not os.path.exists(destiny_path):
             os.makedirs(destiny_path)
 
@@ -46,22 +50,66 @@ class FileWriter:
 
         return destiny_absolute_path
 
-    def extract_filename(self, path):
-        return os.path.basename(path)
-
     def get_destiny_path(self):
-        children = self.get_folders_count(self.CURRENT_FOLDER)
-        parent = self.get_parent_folder(self.CURRENT_FOLDER)
+        """
+            returns and available patch 
+        """
+
+        level, children, parent = self.set_initial()
         
         if children >= self.MAX_FOLDERS and parent == None:
+            #The repository is full
             raise SystemError("The repository is full")
-        elif children==0:
-            self.create_folder(generate_name())
-            pass
-            #when only the ROOT_FOLDER exists
 
+        elif children==0 and level < self.MAX_DEPTH:
+            #Can create folders 'cause it isn't in the deppest folder
+            self.upgrade_current_folder(self.CURRENT_FOLDER)
+            return self.get_destiny_path()
 
+        else:
+            #It's in the deppest folder
+            files = self.get_files_count(self.CURRENT_FOLDER)
+
+            if files < self.MAX_FILES:
+                #It's available
+                return self.CURRENT_FOLDER
+            else:
+                
+                sibblings = self.get_folders_count(parent)
+                if sibblings < self.MAX_FOLDERS:
+                    #Current folder is not full
+                    self.upgrade_current_folder(parent)
+                    return self.CURRENT_FOLDER
+                
+                grand_parent = self.get_parent_folder(parent)
+                if  grand_parent != None:
+                    self.upgrade_current_folder(grand_parent)
+                    return self.get_destiny_path()
+        
         return "files"
+    
+    def upgrade_current_folder(self, older_current):
+        path = os.path.join(older_current, generate_name())   
+        self.create_folder(path)
+        self.CURRENT_FOLDER = path
+
+    def get_parent_folder(self, path):
+        """
+            Gets the parent folder, None if path is root
+        """
+        parent = os.path.dirname(path)
+        return parent if parent != '' else None
+
+    def get_folder_level(self, path):
+        x = path.split("/")
+        return len(x)
+
+    def get_files_count(self, path):
+        files = 0
+        for x in os.listdir(path):
+            if os.path.isfile(os.path.join(path,x)):
+                files +=1
+        return files
 
     def get_folders_count(self, path):
         """
@@ -69,17 +117,19 @@ class FileWriter:
         """
         folders = 0
         for x in os.listdir(path):
-            if os.path.isdir(os.path.join(self.ROOT_FOLDER, x)):
+            if os.path.isdir(os.path.join(path, x)):
                 folders+=1
         return folders
 
+    def set_initial(self):
+        level = self.get_folder_level(self.CURRENT_FOLDER)
+        children = self.get_folders_count(self.CURRENT_FOLDER)
+        parent = self.get_parent_folder(self.CURRENT_FOLDER)
+        return level, children, parent
+
     
-    def get_parent_folder(self, path):
-        """
-            Gets the parent folder, None if path is root
-        """
-        parent = os.path.dirname(path)
-        return parent if parent != '' else None
+    def extract_filename(self, path):
+        return os.path.basename(path)
 
 def generate_name(num=16):
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(num))
