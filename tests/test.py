@@ -7,7 +7,8 @@ class TestFileWriter(unittest.TestCase):
 
     def setUp(self):
         self.ROOT = "files/"
-        self.fw = FileWriter(self.ROOT)
+        self.CURRENT_FOLDER = "files"
+        self.fw = FileWriter(self.ROOT, self.CURRENT_FOLDER)
         self.emptyDirs = []
 
     def test_create_folder(self):
