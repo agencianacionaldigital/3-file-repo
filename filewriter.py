@@ -2,10 +2,16 @@ import os
 from shutil import copyfile, copy2
 
 class FileWriter:
-
+    
+    MAX_FOLDERS = 64
+    
     def __init__(self, root_folder, current_folder):
         self.ROOT_FOLDER = root_folder
         self.CURRENT_FOLDER = current_folder
+
+        if not os.path.exists(self.CURRENT_FOLDER):
+            os.makedirs(self.CURRENT_FOLDER)
+
     
     def get_absolute_uri(self, uri):
         return os.path.join(self.ROOT_FOLDER, uri)
@@ -42,10 +48,13 @@ class FileWriter:
 
     def get_destiny_path(self):
         children = self.get_folders_count(self.CURRENT_FOLDER)
-        print('<==========================================>')
-        print(children)
-        # if children >= MAX_FOLDERS and parent == None:
-		#     return None, "The repository tree is full"
+        parent = self.get_parent_folder(self.CURRENT_FOLDER)
+        
+        if children >= self.MAX_FOLDERS and parent == None:
+            raise SystemError("The repository is full")
+        
+
+
         return "files"
 
     def get_folders_count(self, path):
@@ -62,7 +71,11 @@ class FileWriter:
     def get_parent_folder(self, path):
         """
             Gets the parent folder, None if path is root
-        """        
+        """
+        print('********************* PRINT LOG *********************')
+        print(self.CURRENT_FOLDER)
         parent = os.path.dirname(path)
+        print(parent)
+        print('********************* PRINT LOG *********************')
         return parent if parent != '' else None
         
