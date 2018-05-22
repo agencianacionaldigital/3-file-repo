@@ -1,4 +1,7 @@
 import os
+import string
+import random
+
 from shutil import copyfile, copy2
 
 class FileWriter:
@@ -52,7 +55,10 @@ class FileWriter:
         
         if children >= self.MAX_FOLDERS and parent == None:
             raise SystemError("The repository is full")
-        
+        elif children==0:
+            self.create_folder(generate_name())
+            pass
+            #when only the ROOT_FOLDER exists
 
 
         return "files"
@@ -72,10 +78,9 @@ class FileWriter:
         """
             Gets the parent folder, None if path is root
         """
-        print('********************* PRINT LOG *********************')
-        print(self.CURRENT_FOLDER)
         parent = os.path.dirname(path)
-        print(parent)
-        print('********************* PRINT LOG *********************')
         return parent if parent != '' else None
+
+def generate_name(num=16):
+    return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(num))
         

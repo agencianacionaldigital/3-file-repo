@@ -1,6 +1,7 @@
 import os
 import unittest
 from filewriter import FileWriter
+from filewriter import generate_name
 
 class TestFileWriter(unittest.TestCase):
 
@@ -10,6 +11,10 @@ class TestFileWriter(unittest.TestCase):
         self.CURRENT_FOLDER = "files"
         self.fw = FileWriter(self.ROOT, self.CURRENT_FOLDER)
         self.emptyDirs = []
+
+    def test_generate_name(self):
+        name = generate_name()
+        self.assertIsInstance(name, str)
 
     def test_create_folder(self):
         self.fw.create_folder("test")
