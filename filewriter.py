@@ -57,6 +57,7 @@ class FileWriter:
             raise SystemError("The repository is full")
         elif children==0:
             self.create_folder(generate_name())
+
             pass
             #when only the ROOT_FOLDER exists
 
@@ -80,6 +81,10 @@ class FileWriter:
         """
         parent = os.path.dirname(path)
         return parent if parent != '' else None
+
+    def get_folder_level(self, path):
+        x = path.split("/")
+        return len(x)
 
 def generate_name(num=16):
     return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(num))

@@ -55,6 +55,13 @@ class TestFileWriter(unittest.TestCase):
         parent_folder = self.fw.get_parent_folder("files/parent/child")
         self.assertEquals(parent_folder, "files/parent" )
 
+
+    def test_get_folder_level(self):
+        level = self.fw.get_folder_level("files/parent/child")
+        self.assertEquals(level, 3)
+
+        level = self.fw.get_folder_level("files")
+        self.assertEquals(level,1)
         
     #Tear Down Code
 
