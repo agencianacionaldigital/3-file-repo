@@ -40,6 +40,9 @@ class FileWriter:
         return os.path.basename(path)
 
     def get_destiny_path(self):
+        
+        # if children >= MAX_FOLDERS and parent == None:
+		#     return None, "The repository tree is full"
         return "files"
 
     def get_folders_count(self, path):
@@ -54,5 +57,9 @@ class FileWriter:
 
     
     def get_parent_folder(self, path):
-        return os.path.dirname(path)
+        """
+            Gets the parent folder, None if path is root
+        """        
+        parent = os.path.dirname(path)
+        return parent if parent != '' else None
         
