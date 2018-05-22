@@ -7,7 +7,8 @@ class TestFileWriter(unittest.TestCase):
 
     def setUp(self):
         self.ROOT = "files/"
-        self.fw = FileWriter(self.ROOT)
+        self.CURRENT_FOLDER = "files"
+        self.fw = FileWriter(self.ROOT, self.CURRENT_FOLDER)
         self.emptyDirs = []
 
     def test_create_folder(self):
@@ -32,6 +33,10 @@ class TestFileWriter(unittest.TestCase):
         folders = self.fw.get_folders_count(self.ROOT)
         self.assertEquals(folders, 2)
 
+    def test_get_parent_folder_none(self):
+        parent_folder = self.fw.get_parent_folder("files")
+        self.assertIsNone(parent_folder)
+    
     def test_get_parent_folder(self):
         self.fw.create_folder("parent")
         self.fw.create_folder("parent/child")
