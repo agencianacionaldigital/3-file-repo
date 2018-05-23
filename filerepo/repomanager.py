@@ -10,9 +10,11 @@ class RepoManager:
     MAX_DEPTH = 3
     MAX_FILES = 64
     
-    def __init__(self, root_folder, current_folder):
+    def __init__(self, root_folder, current_folder=""):
         self.ROOT_FOLDER = root_folder
-        self.CURRENT_FOLDER = current_folder
+
+        self.CURRENT_FOLDER = \
+            current_folder if current_folder!="" else self.ROOT_FOLDER
 
         if not os.path.exists(self.CURRENT_FOLDER):
             os.makedirs(self.CURRENT_FOLDER)
@@ -51,6 +53,9 @@ class RepoManager:
         return destiny_absolute_path
 
     def get_path(self, path):
+        """
+            returns a mock destiny path
+        """
         new_path = os.path.join(path, "files")
         return new_path
 
