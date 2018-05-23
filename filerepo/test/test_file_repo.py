@@ -11,7 +11,7 @@ class TestFileWriter(unittest.TestCase):
     def setUp(self):
         self.ROOT = "files"
         self.CURRENT_FOLDER = "files"
-        self.fw = RepoManager(self.ROOT, self.CURRENT_FOLDER)
+        self.rm = RepoManager(self.ROOT, self.CURRENT_FOLDER)
         self.emptyDirs = []
 
     def test_generate_name(self):
@@ -19,7 +19,7 @@ class TestFileWriter(unittest.TestCase):
         self.assertIsInstance(name, str)
 
     def test_create_folder(self):
-        self.fw.create_folder(os.path.join(self.ROOT,"test"))
+        self.rm.create_folder(os.path.join(self.ROOT,"test"))
         self.assertTrue(os.path.exists(os.path.join(self.ROOT,"test")))
 
     # def test_copy_file_to_repo(self):
