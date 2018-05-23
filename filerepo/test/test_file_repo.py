@@ -18,9 +18,9 @@ class TestFileWriter(unittest.TestCase):
         name = generate_name()
         self.assertIsInstance(name, str)
 
-    def test_create_folder(self):
-        self.rm.create_folder(os.path.join(self.ROOT,"test"))
-        self.assertTrue(os.path.exists(os.path.join(self.ROOT,"test")))
+    # def test_create_folder(self):
+    #     self.rm.create_folder(os.path.join(self.ROOT,"test"))
+    #     self.assertTrue(os.path.exists(os.path.join(self.ROOT,"test")))
 
     # def test_copy_file_to_repo(self):
     #     file_path = self.fw.copy_file_to_repo("tests/dummy.pdf")
