@@ -4,7 +4,7 @@ import random
 
 from shutil import copyfile, copy2
 
-class FileWriter:
+class RepoManager:
     
     MAX_FOLDERS = 64
     MAX_DEPTH = 3
@@ -49,6 +49,10 @@ class FileWriter:
         copyfile(source_path, destiny_absolute_path)
 
         return destiny_absolute_path
+
+    def get_path(self, path):
+        new_path = os.path.join(path, "files")
+        return new_path
 
     def get_destiny_path(self):
         """

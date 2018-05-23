@@ -1,5 +1,4 @@
 from setuptools import setup
-
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
     name='Simple File Writer',
@@ -7,7 +6,7 @@ setup(
     author='Iván Casanova',
     author_email='icnovaro@gmail.com,
     # Needed to actually package something
-    packages=['filewriter'],
+    packages='filerepo',
     # Needed for dependencies
     #install_requires=['numpy'],
     # *strongly* suggested for sharing
