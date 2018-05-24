@@ -1,2 +1,2 @@
 test:
-	python -m unittest discover -v "tests" -p "*.py"
+	python -m unittest discover -v "filerepo/test" -p "*.py"

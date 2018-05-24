@@ -1,4 +1,4 @@
-import os
+import os, sys, stat
 import string
 import random
 
@@ -7,16 +7,18 @@ from shutil import copyfile, copy2
 
 class RepoManager:
 
-    MAX_FOLDERS = 64
+    MAX_FOLDERS = 1024
     MAX_DEPTH = 3
-    MAX_FILES = 64
+    MAX_FILES = 1024
 
-    def __init__(self, root_folder, current_folder=""):
+    def __init__(self, root_folder, current_folder):
+
         self.ROOT_FOLDER = root_folder
+        self.CURRENT_FOLDER = current_folder
 
-        self.CURRENT_FOLDER = \
-            current_folder if current_folder != "" else self.ROOT_FOLDER
-
+        if current_folder==None:
+            self.CURRENT_FOLDER = self.ROOT_FOLDER
+    
         if not os.path.exists(self.CURRENT_FOLDER):
             os.makedirs(self.CURRENT_FOLDER)
 
@@ -33,53 +35,31 @@ class RepoManager:
 
         os.makedirs(path)
 
-    def copy_file_to_repo(self, source_path):
-        """
-            Copy file from path given to an available repository tree folder
-        """
-        # the file name is the same source file name
-        destiny_file_basename = self.extract_filename(source_path)
-        destiny_path = self.get_destiny_path()
-
-        if destiny_path is None:
-            return None
-
-        destiny_absolute_path = os.path.join(
-            destiny_path, destiny_file_basename)
-        if not os.path.exists(destiny_path):
-            os.makedirs(destiny_path)
-
-        copyfile(source_path, destiny_absolute_path)
-
-        return destiny_absolute_path
-
     def get_mock_path(self, path):
         """
             returns a mock destiny path
         """
-        new_path = os.path.join(path, "files")
+        new_path = os.path.join(path, "files/")
         return new_path
 
     def get_destiny_path(self):
         """
             returns and available patch 
         """
-
         level, children, parent = self.set_initial()
 
         if children >= self.MAX_FOLDERS and parent == None:
             # The repository is full
             raise SystemError("The repository is full")
 
+        #no esta entrando cuando ya existe el directorio
         elif children == 0 and level < self.MAX_DEPTH:
             # Can create folders 'cause it isn't in the deppest folder
             self.upgrade_current_folder(self.CURRENT_FOLDER)
             return self.get_destiny_path()
-
         else:
             # It's in the deppest folder
             files = self.get_files_count(self.CURRENT_FOLDER)
-
             if files < self.MAX_FILES:
                 # It's available
                 return self.CURRENT_FOLDER
@@ -105,14 +85,15 @@ class RepoManager:
 
     def get_parent_folder(self, path):
         """
-            Gets the parent folder, None if path is root
+            Gets the parent folder, No1f path is root
         """
         parent = os.path.dirname(path)
         return parent if parent != '' else None
 
     def get_folder_level(self, path):
+        parent = self.ROOT_FOLDER.split("/")
         x = path.split("/")
-        return len(x)
+        return len(x) - len(parent)
 
     def get_files_count(self, path):
         files = 0
@@ -129,6 +110,7 @@ class RepoManager:
         for x in os.listdir(path):
             if os.path.isdir(os.path.join(path, x)):
                 folders += 1
+
         return folders
 
     def set_initial(self):
