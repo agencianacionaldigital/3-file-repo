@@ -35,26 +35,6 @@ class RepoManager:
 
         os.makedirs(path)
 
-    def copy_file_to_repo(self, source_path):
-        """
-            Copy file from path given to an available repository tree folder
-        """
-        # the file name is the same source file name
-        destiny_file_basename = self.extract_filename(source_path)
-        destiny_path = self.get_destiny_path()
-
-        if destiny_path is None:
-            return None
-
-        destiny_absolute_path = os.path.join(
-            destiny_path, destiny_file_basename)
-        if not os.path.exists(destiny_path):
-            os.makedirs(destiny_path)
-
-        copyfile(source_path, destiny_absolute_path)
-
-        return destiny_absolute_path
-
     def get_mock_path(self, path):
         """
             returns a mock destiny path
