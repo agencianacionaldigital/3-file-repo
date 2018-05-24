@@ -7,9 +7,9 @@ from shutil import copyfile, copy2
 
 class RepoManager:
 
-    MAX_FOLDERS = 4
-    MAX_DEPTH = 2
-    MAX_FILES = 4
+    MAX_FOLDERS = 1024
+    MAX_DEPTH = 3
+    MAX_FILES = 1024
 
     def __init__(self, root_folder, current_folder):
 
