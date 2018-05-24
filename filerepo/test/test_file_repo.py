@@ -56,20 +56,25 @@ class TestFileWriter(unittest.TestCase):
     #     self.assertEquals(parent_folder, "files/parent" )
 
 
-    # def test_get_folder_level(self):
-    #     level = self.fw.get_folder_level("files/parent/child")
-    #     self.assertEquals(level, 3)
+    def test_get_folder_level(self):
+        rm = RepoManager("files/carpeta/test")
+        level = rm.get_folder_level("files/carpeta/test")
+        self.assertEquals(level, 0)
 
-    #     level = self.fw.get_folder_level("files")
-    #     self.assertEquals(level,1)
+        rm = RepoManager("files/carpeta/test")
+        level = rm.get_folder_level("files/carpeta/test/3434")
+        self.assertEquals(level, 1)
+
 
 
     # def test_get_destiny_path(self):
-    #     fw = FileWriter(self.ROOT, self.CURRENT_FOLDER)
+    #     fw = RepoManager(self.ROOT)
     #     path = fw.get_destiny_path()
 
     #     level = fw.get_folder_level(fw.CURRENT_FOLDER)
-    #     self.assertEquals(level, fw.MAX_DEPTH)
+    #     print(level)
+
+        #self.assertEquals(level, fw.MAX_DEPTH)
 
     # def test_subfolder_is_full(self):
     #     fw = FileWriter(self.ROOT, self.CURRENT_FOLDER)
