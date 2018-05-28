@@ -80,7 +80,7 @@ class RepoManager:
         return "files"
 
     def upgrade_current_folder(self, older_current):
-        path = os.path.join(older_current, generate_name())
+        path = os.path.join(older_current, generate_name(self.FOLDER_NAME_LENGHT))
         self.create_folder(path)
         self.CURRENT_FOLDER = path
 
