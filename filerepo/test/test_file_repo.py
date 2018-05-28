@@ -38,9 +38,6 @@ class TestFileWriter(unittest.TestCase):
         self.rm.create_folder(os.path.join(self.ROOT, "parent"))
         self.rm.create_folder(os.path.join(self.ROOT, "parent/child"))
 
-    def test_get_files_count(self):
-        count = self.rm.get_files_count("filerepo/test/files")
-        self.assertEquals(count, 2)
 
     def test_get_parent_folder_none(self):
         parent_folder = self.rm.get_parent_folder("files")
@@ -55,11 +52,11 @@ class TestFileWriter(unittest.TestCase):
     def test_get_folder_level(self):
         rm = RepoManager("files/carpeta/test", "files/carpeta/test")
         level = rm.get_folder_level("files/carpeta/test")
-        self.assertEquals(level, 0)
+        self.assertEquals(level, 1)
 
         rm = RepoManager("files/carpeta/test", "files/carpeta/test")
         level = rm.get_folder_level("files/carpeta/test/3434")
-        self.assertEquals(level, 1)
+        self.assertEquals(level, 2)
 
 
 

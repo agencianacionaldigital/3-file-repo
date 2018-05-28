@@ -93,7 +93,8 @@ class RepoManager:
     def get_folder_level(self, path):
         parent = self.ROOT_FOLDER.split("/")
         x = path.split("/")
-        return len(x) - len(parent)
+        diff = len(x) - len(parent)
+        return diff + 1
 
     def get_files_count(self, path):
         files = 0
