@@ -15,8 +15,9 @@ class TestFileWriter(unittest.TestCase):
         self.emptyDirs = []
 
     def test_generate_name(self):
-        name = generate_name()
+        name = generate_name(6)
         self.assertIsInstance(name, str)
+        self.assertEqual(len(name), 6)
 
     def test_create_folder(self):
         self.rm.create_folder(os.path.join(self.ROOT,"test"))
@@ -58,6 +59,7 @@ class TestFileWriter(unittest.TestCase):
         level = rm.get_folder_level("files/carpeta/test/3434")
         self.assertEquals(level, 2)
 
+    
 
 
     # def test_get_destiny_path(self):

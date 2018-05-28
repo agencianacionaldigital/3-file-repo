@@ -10,6 +10,7 @@ class RepoManager:
     MAX_FOLDERS = 1024
     MAX_DEPTH = 3
     MAX_FILES = 1024
+    FOLDER_NAME_LENGHT = 6
 
     def __init__(self, root_folder, current_folder):
 
